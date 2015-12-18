@@ -1,0 +1,23 @@
+.position {
+
+}
+
+
+.upsideDown {
+	/*visibility: hidden;*/
+  display: none;
+}
+
+
+.rightsideUp {
+  visibility: visible;
+
+}
+
+.discovered {
+/*The utility of this class 
+  comes in to play in jQuery*/
+}
+
+
+/*.SrcImgPathsIsHowIllCompare*/

@@ -43,14 +43,14 @@ var images = ["http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bills.png",
               "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Chiefs.png",
               "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Cowboys.png",
               "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Eagles.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Jaguars.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Lions.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Panthers.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Raiders.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Ravens.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Saints.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Steelers.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Titans.png"];  //this repeats but in later installments theyll be singles
+              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bills.png",
+              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/49ers.png",
+              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bears.png",
+              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Browns.png",
+              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Cardinals.png",
+              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Chiefs.png",
+              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Cowboys.png",
+              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Eagles.png"];  //this repeats but in later installments theyll be singles
                                                  //and be duplicated by the duplicate function
 var imagesLength = images.length;
 //var dupImgsLength = duplicatedImages.length;   //Merely records the original length of "imagesSubset" in 
@@ -118,7 +118,7 @@ var exposedArray = [];              //ex. [position-1, position-6]
 $("img").click(function()  {  //If user inter-action should only happen given some other conditions are met, then 
                               //conditions aren't met before you allow the user to continue interacting you should check that those
 
-  if ($(this).hasClass(".discovered")) {  //I think this relieves me of having to find a way to
+  if ($(this).hasClass("discovered")) {  //I think this relieves me of having to find a way to
                                          
     console.log("discovered");
     return;
@@ -156,8 +156,8 @@ $("img").click(function()  {  //If user inter-action should only happen given so
 //And then the conditional above should read as follows...
 
 if (   exposedArray[0] === exposedArray[1]  ) {
-    $(exposedArray).addClass("discovered");           ///NEEDS FIXING!!!!
-    $(exposedArray).addClass("discovered");     
+    $("img[src$='"+exposedArray[0]+"']" ).addClass("discovered");           ///NEEDS FIXING!!!!
+    $("img[src$='"+exposedArray[1]+"']" ).addClass("discovered");     
      exposedArray = [];
   };                                    
   //$("1").css("transform","rotateY(90deg"));

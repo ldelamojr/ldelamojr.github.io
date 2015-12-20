@@ -1,3 +1,6 @@
+//1.)MUST ACCOUNT FOR THE USER CLICKING THE SAME CARD TWICE IN A ROW AND THE 
+//COMPUTER REGISTERING THAT AS A MATCH
+
 //HOW DO I USE JQUERY WITHOUT THE INTERNET?
 //SHOULD I WORRY ABOUT CLICK PROPAGATION!
 
@@ -80,176 +83,84 @@ var shuffle = function() {         //This function shuffles the "shuffledImages"
 }
 var shuffledImages = shuffle();
 
+var shuffledImages2 = {};
+
+for (i = 0; i <= shuffledImages.length - 1; i++) {
+  shuffledImages2["position-" + i] = shuffledImages[i];
+}
+shuffledImages = shuffledImages2;
 //Now create the (div's? maybe span's? or NO CONTAINERS AT ALL/MERELY APPEND THEM TO THE BODY?) for the
 //images and assign
 //to the div/spans/(JUST THE IMAGES) containing the images a position class and append them to the body.
 //I think they should float left and
 //perhaps even be given an absolute position at this point so that they don'tget pushed around, if that's
 //a problem anyway.
-for (var i = 0; i <= shuffledImages.length - 1; i++) {           //dupImgsLength in the expanded version of the program
+for (var i = 0; i <= (Object.keys(shuffledImages).length - 1); i++) {           //dupImgsLength in the expanded version of the program
   $("div.game-container").append($("<img>"));
+  // $("img").addClass("disappeared"); 
   $("img").last().addClass("position-" + i);        //OMG! FINALLY thx .last()
-  $("img").last().attr("src", shuffledImages[i]);
-                                //HOW DO I GET THE BACKGROUND IMAGE TO LAY DIRECTLY ON TOP OF THESE IMG'S 
-  // $("img").hide()
-  $("img").addClass("upsideDown");               //Every iteration through the loop, is only the current
-  // $("img").css("?display?", "float");            //img updated?
+  $("img").last().attr("src", coverImage);
   
 }
 
-// $("img").css("position","absolute");  //I left this outside the above loop because otherwise they
-                                         //would not float into orderly rows
-
-                                         // I also need to make sure that simply stating
-                                         //.css("position", "absolute"); actually freezes the
-
-                                         //All this ("position", "absolute") business may not even be necessary
-                                         //if the background images react to window dimensions in the same way
-
-for (var i = 0; i <= shuffledImages.length - 1; i++) {
-  //This lower end of the for loop appends the background/cover image to the page at the same positions as the
-  //it's respective value side.
-  $(".game-container").append($("<img>").attr("src", coverImage));
-  $("img").last().addClass("rightsideUp");
-  $("img.rightsideUp").last().addClass("position-" + i);
-  // $("img.rightSideUp").attr("src", coverImage);           //////CAN I IDENTIFY VIA SOURCE
-  //$("img").css({position of its value counterpart});       //I split these two loops because if I didn't
-  //$("img").addClass("rightsideUp");                        //then I would have to position these background/
-                                                             //cover objects on an absolute position value card
-                                                            
-   
-
-}
-//NOTE:  I didn't need .last() for the attribute line above because all attr are = anyway
-
-
-
+// for (var i = 0; i <= shuffledImages.length - 1; i++) {
+//   //This lower end of the for loop appends the background/cover image to the page at the same positions as the
+//   //it's respective value side.
+//   $(".game-container").append($("<img>").attr("src", coverImage));
+//   $("img").last().addClass("appeared");
+//   $("img.appeared").last().addClass("position-" + i);
+//   // $("img.appeared").attr("src", coverImage);           //////CAN I IDENTIFY VIA SOURCE
+//   //$("img").css({position of its value counterpart});       //I split these two loops because if I didn't
+//   //$("img").addClass("appeared");                        //then I would have to position these background/
+//                                                              //cove
 var exposedArray = [];              //ex. [position-1, position-6]
 
-$("img").click(function() {               //If an action should only happen given some other conditions
-                                          //Then you should check that those conditions aren't met 
-                                          //before you allow the user to continue interacting
+$("img").click(function()  {  //If user inter-action should only happen given some other conditions are met, then 
+                              //conditions aren't met before you allow the user to continue interacting you should check that those
 
-
-                                
-  if ($(this).hasClass("discovered")) {  //I think this relieves me of having to find a way to
-                                         //to make the discovered object unclickable.  I am
-                                         //thinking this will just stop the click event short of
-                                         //doing anything at all, thereby having the effect of
-                                         //the object unclickable.
-    return
+  if ($(this).hasClass(".discovered")) {  //I think this relieves me of having to find a way to
+                                         
+    console.log("discovered");
+    return;
   };         
+  
+  if (exposedArray.length <= 2) {
+  var positionIndex = $(this).attr("class");
+  var teamURL = shuffledImages[positionIndex];
+  var changeURL = $(this).attr( "src", teamURL);  
+  var newSource = $(changeURL).attr("src");
+  exposedArray.push(newSource);
 
-
-debugger
-
-  imgSrc = $(this).attr('src')  //this will be equal to the url of the image of the clicked box.
-  exposedArray.push(imgSrc); // THE CLASS I HAVE IN MIND HERE IS class="position-i"
-                                            //ex. [position-1, position-6, postion-4]
-
-
-  if (exposedArray.length === 3) {
-    $(exposedArray[0]).toggleClass("upsideDown");     //   //exposedArray[0].toggleClass("upsideDown");//   //   
-    $(exposedArray[1]).toggleClass("upsideDown");     //   //exposedArray[1].toggleClass("upsideDown");//   //   
+  } else {};
+  //imgSrc = $(this).attr('src')                //this will be equal to the url of the image of the clicked box.
+  //exposedArray.push(imgSrc);                  // THE CLASS I HAVE IN MIND HERE IS class="position-i"
+                                          ///////////////////////////////////////////////////////////////////////////////////////////////
+  if (exposedArray.length === 3) {        /////////////////////////I THINK I SHOULD MAKE THIS AN ELSE IF CONTINUED WITH THE IF FROM ABOVE
+    console.log("exposedArray has length 3");////////////////////////////////////////////////////////////////////////////////////////////
+    $("img[src$='"+exposedArray[0]+"']" ).attr("src", coverImage);     //   //exposedArray[0].toggleClass("disappeared");//   //   
+    $("img[src$='"+exposedArray[1]+"']" ).attr("src", coverImage);
+    $("img[src$='"+exposedArray[2]+"']" ).attr("src", coverImage);
+    // $(exposedArray[1]).(".disappeared");     //   //exposedArray[1].toggleClass("disappeared");//   //   
                                     //cool animations here
     exposedArray = [];
 
-    // classOfFirstCard = $(exposedArray[0]).attr("class");  //I don't remember why I had these,
-    // classOfSecondCard = $(exposedArray[1]).attr("class"); //they don't seem necessary.  Oh, I think
-                                                          //they were replaced by the two lines just 
-                                                          //above.  Those two do the job I wanted.
-
-                                                          // NICK$(".card").hasClass("pair-1") === true
-    return
-  }
-
-  // debugger           
-  if (exposedArray[0] == exposedArray[1]){
-    console.log('success')
-  }else{
-    console.log('bummer')
-  }
-
-  positionClass = $(this).attr("class")       //THINK THIS SHOULD BE ... = $(THIS).ATTR("CLASS")[0]
-                                              //SINCE BOTH OF THE IMAGES IN POSITION 1(i, really)
-                                              //WILL HAVE MULTIPLE CLASSES AND I THINK I SHOULD 
-                                              //CALL ON [0] BECAUSE I THINK IT WILL ALWAYS REMAIN
-                                              //THE FIRST SPECIFIED CLASS IN THE ARRAY RETURNED BY
-                                              //.attr("class").
-
-  $(positionClass).toggleClass("upsideDown"); //shouldn't this be $(this).toggleClass("upsideDown")
-                                          //NO!!!! because you need to change the class of both
-  //cool animations here                  //cards in this position. One needs to become exposed
-                                          //and the other needs to become covered.
-
-
-   if (exposedArray[0] === exposedArray[1]) {   //I THINK THIS SHOULD BE CHECKING IF IMG SRC'S ARE EQUAL 
-                                                // and therefore, i think should be as below...
-
-   //if ($("exposedArray[0]").attr("src") === $("exposedArray[1]").attr("src")) {} 
-                        //.upsideDown                        //.upsideDown
-
-
-//Theres a problem with the fix(just above) to the conditional above that. The computer will think I'm
-//referring to the background/covering/topside image and therefore will always confirm
-//a mathcing pair.  I must find a way to refer to the (underside) image.
-//A possible yet undesired fix is to add a "rightsideUp" class, this time to the background/covering/topside
-//image, then toggling both the "rightsideUp" and "upsideDown" classes for both cards in the position. This
-//addition would happen in the code underneath the line saying...
-//$(positionClass).toggleClass("upsideDown");  The redone code would read...
-//$(exposedArray[0]).toggleClass("upsideDown");
-//$(exposedArray[1]).toggleClass("upsideDown");
-//$(exposedArray[0]).toggleClass("rightsideUp");
-//$(exposedArray[1]).toggleClass("rightsideUp");
-//
-//And then the conditional above should read as follows...
-
-//if (   $(".rightsideUp.exposedArray[0]").attr("src") === $(".rightsideUp.exposedArray[1]").attr("src")  ) {}
-
-
-
-    $(exposedArray).addClass("discovered");  //   //$(this).exposedArray[0] = "discovered";//   //
-    $(exposedArray).addClass("discovered");  //   //$(this).exposedArray[1] = "discovered";//   //   
-
-    
-
-
-    return exposedArray = [];
-    
-  };
-
-
+    return;
+      };
+  // $(this).attr( "src", shuffledImages[$(this).attr("src", positionClass)] )
   
 
-  // exposedArray.push($(this).attr("class")[0]);  //Referring to position class here! REDUNDANT & INCORRECT !?
+  //$(this).attr( "src", shuffledImages[$(this).attr("class")])  //changes clicked image to a team
+                                    
+  //cool animations here                                                       
 
-                                           //I think this is right BUT WILL AFFECT "exposedArray"'s use
-                                 //above (.i.e) might need to be defined as the object rather
-                                 //than the CLASS of the object.
+//And then the conditional above should read as follows...
 
+if (   exposedArray[0] === exposedArray[1]  ) {
+    $(exposedArray).addClass("discovered");           ///NEEDS FIXING!!!!
+    $(exposedArray).addClass("discovered");     
+     exposedArray = [];
+  };                                    
   //$("1").css("transform","rotateY(90deg"));
-  console.log(exposedArray)
-})
-
-
-// var setUpGame = function() {
-//   // initializes game
-//   // sets up initial pair locations
-//   // prompts user to start
-// }
-
-// var playGame = function() {
-//   // track # of clicks
-//   // store cards in array
-//   // *invoke testPair to test for a match*
-// }
-
-// var checkWinner = function()  {
-//   // check for # of pairs
-// }
-
-// var testPair = function() {
-//   //tests class of two clicked cards to compare for a boolean
-// }
-
-
+});
+//$(this).attr('src')
+//this.classList

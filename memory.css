@@ -3,14 +3,14 @@
 }
 
 
-.upsideDown {
+.disappeared {
 	/*visibility: hidden;*/
   display: none;
 }
 
 
-.rightsideUp {
-  visibility: visible;
+.appeared {
+  
 
 }
 

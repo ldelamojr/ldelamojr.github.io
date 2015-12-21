@@ -1,80 +1,151 @@
+//"http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bills.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/49ers.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bears.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Browns.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Cardinals.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Chiefs.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Cowboys.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Eagles.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bengals.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Jaguars.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Lions.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Panthers.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Raiders.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Ravens.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Saints.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Steelers.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Titans.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Broncos.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Buccaneers.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Chargers.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Colts.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Dolphins.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Falcons.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Jets.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Packers.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Patriots.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Rams.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Redskins.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Seahawks.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Texans.png",
+//                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Vikings.png"
 //1.)MUST ACCOUNT FOR THE USER CLICKING THE SAME CARD TWICE IN A ROW AND THE 
 //COMPUTER REGISTERING THAT AS A MATCH
 
-//HOW DO I USE JQUERY WITHOUT THE INTERNET?
-//SHOULD I WORRY ABOUT CLICK PROPAGATION!
+//2.) I'M CURIOUS IF SOME OF THE FAST CLICK HACKING ALLOWED IS DUE TO THE "DOUBLE CLICKING HACK"
 
-//var coverImageTheme1 = "";  //an img src="" of the (backside of the cards/objects)
-//var coverImageTheme2 = "";
-//var coverImageTheme3 = "";
+//3.) NEED TO CHECK IF "exposedClassArray" FIXED THE "DOUBLE CLICKING HACK"
 
-//var theme1 = [img1,img2,img3,img4,img5,img6];  
-//var theme2 = [];  [OPTIONALITY VARIABLES]          
-//var theme3 = [];  [OPTIONALITY VARIABLES]        
-                    //Each will hold all possible images for their respective theme except the coverImage.
-                    //Higher difficulties will retrieve more of these.
-                    //The array of images is called Theme1 in anticipation of other themes.
+//4.) I DON'T THINK THIS CODE SCALES TO ACCOMODATE REPEATED IMAGES (I.E 4 OF THE SAME)
+//    I THINK A PROBLEM WILL ARISE AT THE "PREVENT THREE FUNCTION" SINCE IMG SRC'S AND
+//    CLASS POSITIONS ARE NOT IN ONE TO ONE CORRESPONDENCE(MAYBE)
+
+//5.) I want to add conditions to the game so that If a player has two unmatched cards
+//    then when they click on a third hidden card, then the previous two flip over
+//    and the currently flipped card REVEALS itself.
+
+//6.) Looks like as the number of cards played with is doubled, the time it takes to complete
+//    the game triples. Rough estimate based on a few trials.
+
+//7.) Add a "you win" message.
+
+var nflBackgroundImage = "http://wallpapercave.com/wp/32xzfWZ.jpg";
+
+var nflCoverImage = "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/NFL.png";  //an img src="" of the "cover image" 
+
+var nflRevealImages = ["http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bills.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/49ers.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bears.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Browns.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Cardinals.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Chiefs.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Cowboys.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Eagles.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bengals.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Jaguars.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bills.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/49ers.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bears.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Browns.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Cardinals.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Chiefs.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Cowboys.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Eagles.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bengals.png",
+                       "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Jaguars.png"];
+
+
+//var kitchenCoverImage = "";
+//var kitchenCoverImage = "";
+
+
+//var thirdThemeCoverImage = "";
+
+  
+//var burgerTheme = []; [OPTIONALITY VARIABLES]          
+//var thirdTheme = [];  [OPTIONALITY VARIABLES] 
+
+                        //Each will hold all possible revealImages for their respective theme except the coverImage.
+                        //Higher difficulties will retrieve more of these.
+                    
                     
 
 
-//var subset;  //num             //[Optionality Variable].  Allow user to choose
+var imageSubset = [0,1,2,3,4,5];   //The subset of revealImages chosen from "allImages"
+
+var duplicate = function(){ //This function will duplicate the revealImages from "imageSubset"
+                            //so as to have pairs of revealImages
+
+}; 
+var duplicatedImages = duplicate();
+
+
+
+
+var backgroundImage;// = nflBackgroundImage;
+
+var coverImage;// = nflCoverImage;         //This should be set via the option box the user chooses
+
+var revealImages;// = nflRevealImages;  
+
+var subset;  //num [need invalid input message then .hide() after keypress(enter)]             //[Optionality Variable].  Allow user to choose
                                //the number of cards to play with.  Analogous to difficulty
 
-//var imageSubset = [0,1,2,3,4,5];   //The subset of images chosen from "allImages"
-
-//var duplicate = function(){};  //This function will duplicate the images from "imageSubset"
-                                 //so as to have pairs of images
-//var duplicatedImages = duplicate();
-
-var coverImage = "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/NFL.png";
-
-// var images = [0,1,2,3,4,5,6,7,0,1,2,3,4,5,6,7];
-// this images variable needs to track both the path to a given card image AND 
-//either a class or id you can use to reload the iamge after you flip it and hide it
-
-// var images = [{imgUrl: "path_to_img", class: "pair-1"}]
+if (  $("select").val() === "nflTheme"  ) {
+  backgroundImage = nflBackgroundImage;
+  coverImage = nflCoverImage; 
+  revealImages = nflRevealImages;
+  console.log("select attribute")
+}
+else if (  $("optionBox").choice === 2  ) {revealImages = theme2}
+else if (  $("optionBox").choice === 3  ) {revealImages = theme3}
 
 
-var images = ["http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bills.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/49ers.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bears.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Browns.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Cardinals.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Chiefs.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Cowboys.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Eagles.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bills.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/49ers.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bears.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Browns.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Cardinals.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Chiefs.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Cowboys.png",
-              "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Eagles.png"];  //this repeats but in later installments theyll be singles
+
+                                                 //this repeats but in later installments theyll be singles
                                                  //and be duplicated by the duplicate function
-var imagesLength = images.length;
-//var dupImgsLength = duplicatedImages.length;   //Merely records the original length of "imagesSubset" in 
+var revealImagesLength = revealImages.length;
+//var dupImgsLength = duplicatedImages.length;   //Merely records the original length of "revealImagesSubset" in 
                                                  //a variable for use in a for loop.
 
 
-                                             //This will be the shuffled images array and will be
+                                             //This will be the shuffled revealImages array and will be
                                              //populated via the "shuffle()" function below.
-var shuffledImages = new Array(images.length-1);//It assumes an undesirable form as an array of arrays.
+var shuffledImages = new Array(revealImages.length-1);//It assumes an undesirable form as an array of arrays.
                                              //The "shuffle()" function will repurpose it into an
                                              //array of strings.
 
-var shuffle = function() {         //This function shuffles the "shuffledImages" array,
-                                   //or the "duplicatedImages" array in further updates 
-                                   //of the game.
+var shuffle = function() {    //This function shuffles the "shuffledImages" array, or the "duplicatedImages" array in further updates 
+                              //of the game.
 
-	for (var i = 0; i <= (imagesLength - 1) ; i++) {
-		shuffledImages[i] = images.splice(Math.floor(Math.random()*(images.length)),1);
+	for (var i = 0; i <= (revealImagesLength - 1) ; i++) {
+		shuffledImages[i] = revealImages.splice(Math.floor(Math.random()*(revealImages.length)),1);
     
-	}                                     //In a later installment, "images" will be replaced with
-                                        //"duplicated images".
+	}                                     //In a later installment, "revealImages" will be replaced with
+                                        //"duplicated revealImages".
 	var gameImages = new Array(shuffledImages.length);
 
-	for (var i = 0; i <= imagesLength - 1; i++) {
+	for (var i = 0; i <= revealImagesLength - 1; i++) {
 		gameImages[i] = shuffledImages[i][0];
 	}
 
@@ -83,18 +154,20 @@ var shuffle = function() {         //This function shuffles the "shuffledImages"
 }
 var shuffledImages = shuffle();
 
-var shuffledImages2 = {};
 
-for (i = 0; i <= shuffledImages.length - 1; i++) {
-  shuffledImages2["position-" + i] = shuffledImages[i];
-}
-shuffledImages = shuffledImages2;
-//Now create the (div's? maybe span's? or NO CONTAINERS AT ALL/MERELY APPEND THEM TO THE BODY?) for the
-//images and assign
-//to the div/spans/(JUST THE IMAGES) containing the images a position class and append them to the body.
-//I think they should float left and
-//perhaps even be given an absolute position at this point so that they don'tget pushed around, if that's
-//a problem anyway.
+
+
+
+  var shuffledImages2 = {};
+
+  for (i = 0; i <= shuffledImages.length - 1; i++) {
+    shuffledImages2["position-" + i] = shuffledImages[i];
+  }
+  shuffledImages = shuffledImages2;
+
+// shuffledImages = objectifyArray();
+
+
 for (var i = 0; i <= (Object.keys(shuffledImages).length - 1); i++) {           //dupImgsLength in the expanded version of the program
   $("div.game-container").append($("<img>"));
   // $("img").addClass("disappeared"); 
@@ -102,65 +175,94 @@ for (var i = 0; i <= (Object.keys(shuffledImages).length - 1); i++) {           
   $("img").last().attr("src", coverImage);
   
 }
+$("body").css('background-image', 'url(' + backgroundImage + ')'); 
+$("body").css('background-size', "stretch");
 
-// for (var i = 0; i <= shuffledImages.length - 1; i++) {
-//   //This lower end of the for loop appends the background/cover image to the page at the same positions as the
-//   //it's respective value side.
-//   $(".game-container").append($("<img>").attr("src", coverImage));
-//   $("img").last().addClass("appeared");
-//   $("img.appeared").last().addClass("position-" + i);
-//   // $("img.appeared").attr("src", coverImage);           //////CAN I IDENTIFY VIA SOURCE
-//   //$("img").css({position of its value counterpart});       //I split these two loops because if I didn't
-//   //$("img").addClass("appeared");                        //then I would have to position these background/
-//                                                              //cove
-var exposedArray = [];              //ex. [position-1, position-6]
+var exposedArray = [];  //ex. [position-1, position-6].  
+
+var exposedClassArray = []; //This particular array is 
+                            //defined and utilized merely
+                            //for match checking. If the two dom elements clicked have
+                            //the same postiion class(because the same dom element was 
+                            //clicked twice), then this will be used to block the computer
+                            //from registering a match.
 
 $("img").click(function()  {  //If user inter-action should only happen given some other conditions are met, then 
                               //conditions aren't met before you allow the user to continue interacting you should check that those
 
-  if ($(this).hasClass("discovered")) {  //I think this relieves me of having to find a way to
-                                         
-    console.log("discovered");
-    return;
-  };         
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  if (exposedArray.length === 2 && 
+       ( 
+         $(this).attr("class") === exposedClassArray[0] || 
+         $(this).attr("class") === exposedClassArray[1] 
+       )
+     )  
+        {  
+           
+           
+           if (  $(this).attr("class") != exposedClassArray[0]  &&  $(this).attr("class") != exposedClassArray[1]  ) {
+             var positionIndex = $(this).attr("class");
+             var teamURL = shuffledImages[positionIndex];
+             var changeURL = $(this).attr( "src", teamURL);   //This block of code not only pushes the url into exposed array,
+             var newSource = $(changeURL).attr("src");        //but also changes the url of the dom element in the current position
+             exposedArray.push(newSource); 
+
+             exposedClassArray.push($(this).attr("class"))
+           }
+
+           $("img[src$='"+exposedArray[0]+"']" ).attr("src", coverImage);       
+           $("img[src$='"+exposedArray[1]+"']" ).attr("src", coverImage); // I FOUND THIS SELECTOR ON STACK EXCHANGE WHEN I SEARCHED FOR "src selector"
+
+        };
   
+  
+  
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+
+ if (  $(this).attr("class") === exposedClassArray[0]  ||
+       $(this).attr("class") === exposedClassArray[1]    
+     ) 
+       {
+        return
+       };
+
+  if ($(this).hasClass("discovered")) {return};         
+ 
+
+
   if (exposedArray.length <= 2) {
   var positionIndex = $(this).attr("class");
   var teamURL = shuffledImages[positionIndex];
-  var changeURL = $(this).attr( "src", teamURL);  
-  var newSource = $(changeURL).attr("src");
-  exposedArray.push(newSource);
+  var changeURL = $(this).attr( "src", teamURL);   //This block of code not only pushes the url into exposed array,
+  var newSource = $(changeURL).attr("src");        //but also changes the url of the dom element in the current position
+  exposedArray.push(newSource);                    //to reveal the team.  This was something I did not expect js to do.
 
-  } else {};
-  //imgSrc = $(this).attr('src')                //this will be equal to the url of the image of the clicked box.
-  //exposedArray.push(imgSrc);                  // THE CLASS I HAVE IN MIND HERE IS class="position-i"
+  exposedClassArray.push($(this).attr("class"));
+
+  }
                                           ///////////////////////////////////////////////////////////////////////////////////////////////
   if (exposedArray.length === 3) {        /////////////////////////I THINK I SHOULD MAKE THIS AN ELSE IF CONTINUED WITH THE IF FROM ABOVE
     console.log("exposedArray has length 3");////////////////////////////////////////////////////////////////////////////////////////////
-    $("img[src$='"+exposedArray[0]+"']" ).attr("src", coverImage);     //   //exposedArray[0].toggleClass("disappeared");//   //   
-    $("img[src$='"+exposedArray[1]+"']" ).attr("src", coverImage);
+    $("img[src$='"+exposedArray[0]+"']" ).attr("src", coverImage);       
+    $("img[src$='"+exposedArray[1]+"']" ).attr("src", coverImage); // I FOUND THIS SELECTOR ON STACK EXCHANGE WHEN I SEARCHED FOR "src selector"
     $("img[src$='"+exposedArray[2]+"']" ).attr("src", coverImage);
     // $(exposedArray[1]).(".disappeared");     //   //exposedArray[1].toggleClass("disappeared");//   //   
                                     //cool animations here
     exposedArray = [];
-
+    exposedClassArray = [];
     return;
-      };
-  // $(this).attr( "src", shuffledImages[$(this).attr("src", positionClass)] )
-  
-
-  //$(this).attr( "src", shuffledImages[$(this).attr("class")])  //changes clicked image to a team
+  };
                                     
   //cool animations here                                                       
-
-//And then the conditional above should read as follows...
 
 if (   exposedArray[0] === exposedArray[1]  ) {
     $("img[src$='"+exposedArray[0]+"']" ).addClass("discovered");           ///NEEDS FIXING!!!!
     $("img[src$='"+exposedArray[1]+"']" ).addClass("discovered");     
      exposedArray = [];
+     exposedClassArray = [];
   };                                    
   //$("1").css("transform","rotateY(90deg"));
 });
-//$(this).attr('src')
 //this.classList

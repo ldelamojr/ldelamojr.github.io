@@ -19,5 +19,13 @@
   comes in to play in jQuery*/
 }
 
+input {
+  width: 31em;
+}
 
+header {
+  text-align: center;
+  color: #FFFFFF;
+  font-family: Georgia;
+}
 /*.SrcImgPathsIsHowIllCompare*/

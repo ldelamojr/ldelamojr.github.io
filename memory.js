@@ -75,32 +75,19 @@ var nflRevealImages = ["http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bills
                        "http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Jaguars.png"];
 
 
+//var kitchenBackgroundImage = "";
 //var kitchenCoverImage = "";
-//var kitchenCoverImage = "";
-
+//kitchenRevealImage = "";
 
 //var thirdThemeCoverImage = "";
 
   
+
 //var burgerTheme = []; [OPTIONALITY VARIABLES]          
 //var thirdTheme = [];  [OPTIONALITY VARIABLES] 
 
                         //Each will hold all possible revealImages for their respective theme except the coverImage.
                         //Higher difficulties will retrieve more of these.
-                    
-                    
-
-
-var imageSubset = [0,1,2,3,4,5];   //The subset of revealImages chosen from "allImages"
-
-var duplicate = function(){ //This function will duplicate the revealImages from "imageSubset"
-                            //so as to have pairs of revealImages
-
-}; 
-var duplicatedImages = duplicate();
-
-
-
 
 var backgroundImage;// = nflBackgroundImage;
 
@@ -117,8 +104,26 @@ if (  $("select").val() === "nflTheme"  ) {
   revealImages = nflRevealImages;
   console.log("select attribute")
 }
-else if (  $("optionBox").choice === 2  ) {revealImages = theme2}
-else if (  $("optionBox").choice === 3  ) {revealImages = theme3}
+else if (  $("select").choice === 2  ) {revealImages = theme2}
+else if (  $("select").choice === 3  ) {revealImages = theme3}
+
+
+
+var randomSubArray = function(array) {
+  var imageSubset = []; //= [0,1,2,3,4,5];   //The subset of revealImages chosen from "allImages"
+
+  for (i = 0; $("input.subset").val() - 1; i++) {
+    imageSubset[i] = revealImages.splice(Math.floor(Math.random()*(revealImages.length)),1);
+  }
+}
+
+
+
+var duplicate = function(){ //This function will duplicate the revealImages from "imageSubset"
+                            //so as to have pairs of revealImages
+
+}; 
+var duplicatedImages = duplicate();
 
 
 
@@ -186,12 +191,15 @@ var exposedClassArray = []; //This particular array is
                             //the same postiion class(because the same dom element was 
                             //clicked twice), then this will be used to block the computer
                             //from registering a match.
-
+var win = 0;
 $("img").click(function()  {  //If user inter-action should only happen given some other conditions are met, then 
                               //conditions aren't met before you allow the user to continue interacting you should check that those
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  if ($(this).hasClass("discovered")) {return}; 
+
+
   if (exposedArray.length === 2 && 
        ( 
          $(this).attr("class") === exposedClassArray[0] || 
@@ -199,40 +207,61 @@ $("img").click(function()  {  //If user inter-action should only happen given so
        )
      )  
         {  
-           
-           
-           if (  $(this).attr("class") != exposedClassArray[0]  &&  $(this).attr("class") != exposedClassArray[1]  ) {
-             var positionIndex = $(this).attr("class");
-             var teamURL = shuffledImages[positionIndex];
-             var changeURL = $(this).attr( "src", teamURL);   //This block of code not only pushes the url into exposed array,
-             var newSource = $(changeURL).attr("src");        //but also changes the url of the dom element in the current position
-             exposedArray.push(newSource); 
-
-             exposedClassArray.push($(this).attr("class"))
-           }
-
+           console.log("detected 3rd click in one of prev two positions")
            $("img[src$='"+exposedArray[0]+"']" ).attr("src", coverImage);       
-           $("img[src$='"+exposedArray[1]+"']" ).attr("src", coverImage); // I FOUND THIS SELECTOR ON STACK EXCHANGE WHEN I SEARCHED FOR "src selector"
+           $("img[src$='"+exposedArray[1]+"']" ).attr("src", coverImage);
+           exposedArray = [];
+           exposedClassArray = [];
+           return
+  }                                          //The block of code between these /bars attempts to tweak the
+                                             //whether third unmatched cards flip or not.  
+  else if (exposedArray.length === 2 &&
+            (
+              $(this).attr("class") != exposedClassArray[0]  &&  
+              $(this).attr("class") != exposedClassArray[1]  
+            ) 
+          )
+              {
+                 console.log("detected 3rd click but not on one of prev two clicked positions")
+                 var positionIndex = $(this).attr("class");
+                 var teamURL = shuffledImages[positionIndex];
+                 var changeURL = $(this).attr( "src", teamURL);   //This block of code not only pushes the url into exposed array,
+                 var newSource = $(changeURL).attr("src");        //but also changes the url of the dom element in the current position
+                 
+                 console.log(exposedArray)
+                 $("img[src$='"+exposedArray[0]+"']" ).attr("src", coverImage);       
+                 $("img[src$='"+exposedArray[1]+"']" ).attr("src", coverImage);
+                 exposedArray = [];
+                 exposedClassArray = [];
 
-        };
-  
+                 exposedArray.push(newSource); 
+
+                 exposedClassArray.push($(this).attr("class"))
+                 console.log(exposedArray)
+                 console.log(exposedClassArray)
+                 return
+  };
+
+            // I FOUND THIS SELECTOR ON STACK EXCHANGE WHEN I SEARCHED FOR "src selector"
+  if ($(this).attr("class") === exposedClassArray[0] ) {return};
   
   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
 
- if (  $(this).attr("class") === exposedClassArray[0]  ||
-       $(this).attr("class") === exposedClassArray[1]    
-     ) 
-       {
-        return
-       };
+ // if (  $(this).attr("class") === exposedClassArray[0]  ||
+ //       $(this).attr("class") === exposedClassArray[1]    
+ //     ) 
+ //       {
+ //        return
+ //       };
 
-  if ($(this).hasClass("discovered")) {return};         
+          
  
 
 
   if (exposedArray.length <= 2) {
+    console.log("pushing")
   var positionIndex = $(this).attr("class");
   var teamURL = shuffledImages[positionIndex];
   var changeURL = $(this).attr( "src", teamURL);   //This block of code not only pushes the url into exposed array,
@@ -247,8 +276,7 @@ $("img").click(function()  {  //If user inter-action should only happen given so
     console.log("exposedArray has length 3");////////////////////////////////////////////////////////////////////////////////////////////
     $("img[src$='"+exposedArray[0]+"']" ).attr("src", coverImage);       
     $("img[src$='"+exposedArray[1]+"']" ).attr("src", coverImage); // I FOUND THIS SELECTOR ON STACK EXCHANGE WHEN I SEARCHED FOR "src selector"
-    $("img[src$='"+exposedArray[2]+"']" ).attr("src", coverImage);
-    // $(exposedArray[1]).(".disappeared");     //   //exposedArray[1].toggleClass("disappeared");//   //   
+    $("img[src$='"+exposedArray[2]+"']" ).attr("src", coverImage); 
                                     //cool animations here
     exposedArray = [];
     exposedClassArray = [];
@@ -260,9 +288,15 @@ $("img").click(function()  {  //If user inter-action should only happen given so
 if (   exposedArray[0] === exposedArray[1]  ) {
     $("img[src$='"+exposedArray[0]+"']" ).addClass("discovered");           ///NEEDS FIXING!!!!
     $("img[src$='"+exposedArray[1]+"']" ).addClass("discovered");     
-     exposedArray = [];
-     exposedClassArray = [];
+    exposedArray = [];
+    exposedClassArray = [];
+    win += 1;
+    if (win === 3) {
+      $("div.game-container").text("You win").css({"color": "white", "font-size": "6em", "text-align":"center"});
+      // $("h1").text("You win!");
+      console.log("win = "+win);
+    }
   };                                    
-  //$("1").css("transform","rotateY(90deg"));
+  //$(this).css("transform","rotateY(90deg"));
 });
 //this.classList

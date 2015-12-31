@@ -3,25 +3,37 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title></title>
+	<title>Memory you.0</title>
 	<link rel="stylesheet" href="memory.css">
 </head>
-<body>
+<body>    
 
   <header>
-  	<h1>Memory</h1>
+  	<h1>Memory [you.0]</h1>
 
     <select>
+      <option value="unchosen">Choose One</option>
+
       <option value="nflTheme">NFL Theme</option>
       
       <option value="kitchenTheme">Kitchen Theme</option>
 
-      <option value="thirdTheme">Third Theme</option>
+      <option value="emoticonTheme">Emoticon Theme</option>
+
+      <option value="customTheme">Create your own theme</option>
     </select>
     
+    <input placeholder="Insert a background Image for the game." class="backgroundImage">
 
-    <input placeholder="(Optional) Insert additional image urls one at a time here." class="images">
-    <input placeholder="(Optional) Choose number of images to play with.(Default = all)" class="subset">
+    <input placeholder="Insert a 'cover-side' image for the 'cards'." class="coverSideImage">
+
+    <input placeholder="Insert additional image urls one at a time here." class="images">
+
+    <input class="subset"> <!--placeholder to be added via jquery-->
+
+    <h3>Time Elapsed:</h3>
+    <h3 class="clock"></h3>
+
 
   </header>
 

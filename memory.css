@@ -1,17 +1,6 @@
-.position {
-
-}
-
-
 .disappeared {
 	/*visibility: hidden;*/
   display: none;
-}
-
-
-.appeared {
-  
-
 }
 
 .discovered {
@@ -19,13 +8,26 @@
   comes in to play in jQuery*/
 }
 
+.clock {
+  font-family: monospace;
+}
+
 input {
   width: 31em;
+  visibility: hidden;
 }
 
 header {
   text-align: center;
   color: #FFFFFF;
   font-family: Georgia;
+}
+
+h1 {
+  background-color: black;
+}
+
+h3 {
+  visibility: hidden;
 }
 /*.SrcImgPathsIsHowIllCompare*/

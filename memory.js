@@ -10,6 +10,10 @@
 // variable on line 194.  I don't know why that was necessary since I defined shuffled images 
 // originally "outside" of both the keypress and shuffle functions
 
+// The same problem as above arose when trying to push into revealImages within the custom
+// theme section of the code.  Upon trying to push a url into revealImages, the computer
+// alerted that revealImages was undefined.
+
 
 var nflBackgroundImage = "http://wallpapercave.com/wp/32xzfWZ.jpg";
 
@@ -96,6 +100,10 @@ var nflRevealImages = ["http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bills
 //    every "round".  So for the case of the nfl images, they would play 31 rounds where on the i'th round
 //    has subset = i
 
+//7.) Get rid of the "all" condition at the beginning of the pullSubset function.
+
+//8.) Add a button that merely re-covers and reshuffles using the same image setup chosen
+
 //http://iconeasy.com/icon/128/Nature/Planets/Earth.png
 //var kitchenBackgroundImage = "";
 //var kitchenCoverImage = "";
@@ -154,7 +162,7 @@ var backgroundImage;
 
 var coverImage;         //This should be set via the option box the user chooses
 
-var revealImages; 
+var revealImages = []; 
 
 var subset; 
 
@@ -314,19 +322,57 @@ var setUpPage = function() {
                                                     }
 
     else if (  $("select").val() === "customTheme"  ) {
-                                                       $("input").css("visibility", "visible");
-                                                      };   
-
-    $("body").css('background-image', 'url(' + backgroundImage + ')'); 
-    // $("body").css('background-size', "stretch");
-    $("select").hide(); 
-    $("input.subset").css({"visibility": "visible", "width": "50em"});
-    $("input.subset").attr("placeholder", "Choose the number of images to play with. Pick a number between 1 and " + revealImages.length + " and press enter.");
-    $("h3").css({"background-color": "black", "visibility": "visible"});
-    pullSubset();
+                                                       $("input.backgroundImage").css("visibility", "visible");
+                                                      }   
+    if ( $("select").val() !== "customTheme") {
+      $("body").css('background-image', 'url(' + backgroundImage + ')'); 
+      // $("body").css('background-size', "stretch");
+       
+      $("input.subset").css({"visibility": "visible", "width": "50em"});
+      $("input.subset").attr("placeholder", "Choose the number of images to play with. Pick a number between 1 and " + revealImages.length + " and press enter.");
+      $("h3").css({"background-color": "black", "visibility": "visible"});
+      pullSubset();
+    }
+    $("select").hide();
   })                                              
 };
 setUpPage();
+
+$("input.backgroundImage").keypress(function(e) {
+  if (e.which === 13) {
+    backgroundImage = $("input.backgroundImage").val();
+    $("body").css('background-image', 'url(' + backgroundImage + ')');
+    $("input.backgroundImage").css("visibility", "hidden");
+    $("input.coverSideImage").css("visibility", "visible");
+  }
+});
+
+$("input.coverSideImage").keypress(function(e) {
+  if (e.which === 13) {
+    coverImage = $("input.coverSideImage").val();
+    $("input.coverSideImage").css("visibility", "hidden");
+    $("input.images").css("visibility", "visible");
+    $("button.done").css("visibility", "visible")
+  }
+});
+
+$("input.images").keypress(function(e) {
+  if (e.which === 13) {
+    revealImages.push($("input.images").val());
+    $("input.images").val("");
+    
+  }
+});
+
+$("button.done").click(function () {
+  $("input.images").css("visibility", "hidden");
+  $("button.done").css("visibility", "hidden");
+
+  $("input.subset").css({"visibility": "visible", "width": "50em"});
+  $("input.subset").attr("placeholder", "Choose the number of images to play with. Pick a number between 1 and " + revealImages.length + " and press enter.");
+  $("h3").css({"background-color": "black", "visibility": "visible"});
+  pullSubset();
+});
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -413,8 +459,7 @@ var uponClick = function() {
         $("<h2>").appendTo("body");
         $("h2").text("You Win!");
         $("h2").css({"background": "white", "padding": "2em", "text-align": "center", "font-size": "1em", "color": "black"});
-        $("<button type='submit'>Play Again?</button>").appendTo("body");
-        $("button").css("margin", "0 auto");
+        $("<button type='submit' class='refresh'>Play Again?</button>").appendTo("body");
        }
     };                                    
       //$("1").css("transform","rotateY(90deg"));
@@ -422,7 +467,7 @@ var uponClick = function() {
 };
 uponClick();
 
-$("body").on("click", "button", function() {
+$("body").on("click", "button.refresh", function() {
   location.reload(true);
 });
 //this.classList

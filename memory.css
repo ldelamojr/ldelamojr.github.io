@@ -13,7 +13,7 @@
 }
 
 input {
-  width: 31em;
+  width: 100em;
   visibility: hidden;
 }
 
@@ -28,6 +28,10 @@ h1 {
 }
 
 h3 {
+  visibility: hidden;
+}
+
+.done {
   visibility: hidden;
 }
 /*.SrcImgPathsIsHowIllCompare*/

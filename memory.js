@@ -12,7 +12,10 @@
 
 // The same problem as above arose when trying to push into revealImages within the custom
 // theme section of the code.  Upon trying to push a url into revealImages, the computer
-// alerted that revealImages was undefined.
+// alerted that revealImages was undefined.  OH WAIT! I FIXED IT MERELY BY SPECIFYING THAT
+// revealImages WILL BE AN ARRAY (var revealImages = [];) as opposed to what it was before
+// (var revealImages;).  MAYBE SOMETHING SIMILAR COULD HAVE FIXED THE PROBLEM I HAD WITH
+// shuffledImages
 
 
 var nflBackgroundImage = "http://wallpapercave.com/wp/32xzfWZ.jpg";
@@ -55,7 +58,7 @@ var nflRevealImages = ["http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bills
 //    if you've come across the same image on different attempts, then what proportion of the 
 //    time do you match them correctly, the next time one of that same image is uncovered again.
 //    As for how to do this, consider an array that records all src's flipped throughout the whole
-//    game, then the number of excess src's beyond 2 (per src) will tell me howpoorly the player
+//    game, then the number of excess src's beyond 2 (per src) will tell me how poorly the player
 //    played.  This measure could be called mistake.  ACTUALLY THIS COULD BE MERELY THE NUMBER OF
 //    CLICKS FOR THE WHOLE GAME.  THESE CLICKS, HOWEVER, CANNOT BE COUNTED AT THE BEGINNING OF 
 //    THE CLICK FUNCTION, BECAUSE IN THAT CASE, CLICKING THE SAME IMAGE TWICE IN A ROW WOULD ADD
@@ -99,8 +102,6 @@ var nflRevealImages = ["http://www.iconeasy.com/icon/png/Sport/NFL%20Teams/Bills
 //6.) Afford the user the ability to play an incremental mode, where subset automatically increases by one
 //    every "round".  So for the case of the nfl images, they would play 31 rounds where on the i'th round
 //    has subset = i
-
-//7.) Get rid of the "all" condition at the beginning of the pullSubset function.
 
 //8.) Add a button that merely re-covers and reshuffles using the same image setup chosen
 
@@ -177,11 +178,8 @@ var pullSubset = function() {
   $("input.subset").keypress(function(e) {
     if (e.which === 13) {
       console.log("enter was pressed");
-      if (  $("input.subset").val() === "all"  ) {
-        subset = revealImages.length;
-      }
 
-      else if (
+      if (
           parseInt($("input.subset").val()) > revealImages.length  ||
           parseInt($("input.subset").val()) < 1                        
          ) 
@@ -359,8 +357,10 @@ $("input.coverSideImage").keypress(function(e) {
 $("input.images").keypress(function(e) {
   if (e.which === 13) {
     revealImages.push($("input.images").val());
-    $("input.images").val("");
-    
+    $("<li>").appendTo("ul");
+    $("li").css({"background-color": "black", "color": "white"});
+    $("li").last().text($("input.images").val());
+    $("input.images").val(""); 
   }
 });
 
@@ -371,6 +371,7 @@ $("button.done").click(function () {
   $("input.subset").css({"visibility": "visible", "width": "50em"});
   $("input.subset").attr("placeholder", "Choose the number of images to play with. Pick a number between 1 and " + revealImages.length + " and press enter.");
   $("h3").css({"background-color": "black", "visibility": "visible"});
+  $("ul").hide();
   pullSubset();
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -387,6 +388,8 @@ var exposedClassArray = []; //for match checking. If the two dom elements clicke
                             //computer from registering a match.
 var win = 0;
 var timeElapsed = 0;
+
+var numberOfClicks = 0;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -420,6 +423,8 @@ var uponClick = function() {
                  
                  exposedArray.push(newSource); 
                  exposedClassArray.push($(this).attr("class"))
+                 numberOfClicks++;
+                 $("h3.clicks").text(numberOfClicks);
       }
 
     exposedArray.splice(0,2);
@@ -443,7 +448,8 @@ var uponClick = function() {
       exposedArray.push(newSource);                    //to reveal the team.  This was something I did not expect js to do.
 
       exposedClassArray.push($(this).attr("class"));
-
+      numberOfClicks++;
+      $("h3.clicks").text(numberOfClicks);
     }                                      
       //cool animations here                                                       
 
@@ -459,6 +465,7 @@ var uponClick = function() {
         $("<h2>").appendTo("body");
         $("h2").text("You Win!");
         $("h2").css({"background": "white", "padding": "2em", "text-align": "center", "font-size": "1em", "color": "black"});
+        $("<button type='submit' class='reshuffle'>Re-shuffle and play again</button>").appendTo("body");
         $("<button type='submit' class='refresh'>Play Again?</button>").appendTo("body");
        }
     };                                    
@@ -466,6 +473,10 @@ var uponClick = function() {
   });
 };
 uponClick();
+
+$("body").on("click", "button.reshuffle", function () {
+
+})
 
 $("body").on("click", "button.refresh", function() {
   location.reload(true);

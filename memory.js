@@ -328,7 +328,7 @@ var setUpPage = function() {
        
       $("input.subset").css({"visibility": "visible", "width": "50em"});
       $("input.subset").attr("placeholder", "Choose the number of images to play with. Pick a number between 1 and " + revealImages.length + " and press enter.");
-      $("h3").css({"background-color": "black", "visibility": "visible"});
+      $("h3").css({"background-color": "rgb(0,0,0,0)", "visibility": "visible"});
       pullSubset();
     }
     $("select").hide();
@@ -463,9 +463,9 @@ var uponClick = function() {
         clearInterval(myInterval);
         $("img").hide();
         $("<h2>").appendTo("body");
-        $("h2").text("You Win!");
-        $("h2").css({"background": "white", "padding": "2em", "text-align": "center", "font-size": "1em", "color": "black"});
-        $("<button type='submit' class='reshuffle'>Re-shuffle and play again</button>").appendTo("body");
+        $("h2").text("You Win!").addClass("winner");
+        $("h2").css({"padding": "2em", "text-align": "center", "color": "white"});
+        // $("<button type='submit' class='reshuffle'>Re-shuffle and play again</button>").appendTo("body");
         $("<button type='submit' class='refresh'>Play Again?</button>").appendTo("body");
        }
     };                                    

@@ -461,10 +461,10 @@ var uponClick = function() {
        win += 1;
        if (win === subset) {
         clearInterval(myInterval);
-        $("img").hide();
+        // $("img").hide();
         $("<h2>").appendTo("body");
-        $("h2").text("You Win!").addClass("winner");
-        $("h2").css({"padding": "2em", "text-align": "center", "color": "white"});
+        $("h1").text("You Win!").addClass("winner");
+        // $("h2").css({"padding": "2em", "text-align": "center", "color": "white"});
         // $("<button type='submit' class='reshuffle'>Re-shuffle and play again</button>").appendTo("body");
         $("<button type='submit' class='refresh'>Play Again?</button>").appendTo("body");
        }

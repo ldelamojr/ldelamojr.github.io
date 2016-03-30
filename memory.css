@@ -1,6 +1,7 @@
 .discovered {
 /*The utility of this class 
   comes in to play in jQuery*/
+  opacity: .5;
 }
 
 .clock {
@@ -22,6 +23,8 @@ h1 {
   /*background-color: black;*/
   background-color: rgba(0,0,0,0);
   text-shadow: 1px 1px 0 #000000, -1px -1px 0 #000000, -1px 1px 0 #000000, 1px -1px 0 #000000;
+  font-size: 3em;
+  margin-bottom: 0;
 }
 
 h3 {

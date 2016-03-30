@@ -464,6 +464,7 @@ var uponClick = function() {
         // $("img").hide();
         $("<h2>").appendTo("body");
         $("h1").text("You Win!").addClass("winner");
+        $("h1").animate()
         // $("h2").css({"padding": "2em", "text-align": "center", "color": "white"});
         // $("<button type='submit' class='reshuffle'>Re-shuffle and play again</button>").appendTo("body");
         $("<button type='submit' class='refresh'>Play Again?</button>").appendTo("body");

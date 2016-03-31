@@ -463,8 +463,14 @@ var uponClick = function() {
         clearInterval(myInterval);
         // $("img").hide();
         $("<h2>").appendTo("body");
-        $("h1").text("You Win!").addClass("winner");
-        $("h1").animate()
+        $("h1").text("You Win!").addClass("winner").css({"position":"relative"});
+        function doSetInterval() {
+          setInterval(function(){
+            $("h1").animate({top:"+=20"},250)
+            $("h1").animate({top:"-=20"},250)
+          })
+        }
+        doSetInterval();
         // $("h2").css({"padding": "2em", "text-align": "center", "color": "white"});
         // $("<button type='submit' class='reshuffle'>Re-shuffle and play again</button>").appendTo("body");
         $("<button type='submit' class='refresh'>Play Again?</button>").appendTo("body");

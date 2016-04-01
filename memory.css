@@ -4,10 +4,6 @@
   opacity: .5;
 }
 
-.clock {
-  font-family: monospace;
-}
-
 body {
   text-align: center;
 }
@@ -48,21 +44,26 @@ h2 {
 
 }
 
+
 .done {
   display: none;
 }
 
-.game-container {
- text-align: center;
-}
 
 .stats-container {
   display: inline-block;
   margin-top: 0;
 }
 
-.time, .click, .efficient {
-  float: left;
-  margin: 3em;
-}
+    .time, .click, .efficient {
+      float: left;
+      margin: 3em;
+    }
 
+    .clock {
+      font-family: monospace;
+    }
+
+.game-container {
+ text-align: center;
+}

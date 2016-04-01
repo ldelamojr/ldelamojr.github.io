@@ -8,9 +8,14 @@
   font-family: monospace;
 }
 
+body {
+  text-align: center;
+}
+
 input {
   width: 100em;
-  visibility: hidden;
+  margin: 0 auto;
+  display: none;
 }
 
 header {
@@ -44,10 +49,20 @@ h2 {
 }
 
 .done {
-  visibility: hidden;
+  display: none;
 }
 
 .game-container {
  text-align: center;
+}
+
+.stats-container {
+  display: inline-block;
+  margin-top: 0;
+}
+
+.time, .click, .efficient {
+  float: left;
+  margin: 3em;
 }
 

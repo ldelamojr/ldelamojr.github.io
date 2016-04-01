@@ -320,13 +320,13 @@ var setUpPage = function() {
                                                     }
 
     else if (  $("select").val() === "customTheme"  ) {
-                                                       $("input.backgroundImage").css("visibility", "visible");
+                                                       $("input.backgroundImage").css("display", "block");
                                                       }   
     if ( $("select").val() !== "customTheme") {
       $("body").css('background-image', 'url(' + backgroundImage + ')'); 
       // $("body").css('background-size', "stretch");
        
-      $("input.subset").css({"visibility": "visible", "width": "50em"});
+      $("input.subset").css({"display": "block", "width": "50em"});
       $("input.subset").attr("placeholder", "Choose the number of images to play with. Pick a number between 1 and " + revealImages.length + " and press enter.");
       $("h3").css({"background-color": "rgb(0,0,0,0)", "visibility": "visible"});
       pullSubset();
@@ -340,17 +340,17 @@ $("input.backgroundImage").keypress(function(e) {
   if (e.which === 13) {
     backgroundImage = $("input.backgroundImage").val();
     $("body").css('background-image', 'url(' + backgroundImage + ')');
-    $("input.backgroundImage").css("visibility", "hidden");
-    $("input.coverSideImage").css("visibility", "visible");
+    $("input.backgroundImage").css("display", "none");
+    $("input.coverSideImage").css("display", "block");
   }
 });
 
 $("input.coverSideImage").keypress(function(e) {
   if (e.which === 13) {
     coverImage = $("input.coverSideImage").val();
-    $("input.coverSideImage").css("visibility", "hidden");
-    $("input.images").css("visibility", "visible");
-    $("button.done").css("visibility", "visible")
+    $("input.coverSideImage").css("display", "none");
+    $("input.images").css("display", "block");
+    $("button.done").css("display", "block")
   }
 });
 
@@ -365,10 +365,10 @@ $("input.images").keypress(function(e) {
 });
 
 $("button.done").click(function () {
-  $("input.images").css("visibility", "hidden");
-  $("button.done").css("visibility", "hidden");
+  $("input.images").css("display", "none");
+  $("button.done").css("display", "none");
 
-  $("input.subset").css({"visibility": "visible", "width": "50em"});
+  $("input.subset").css({"display": "block", "width": "50em"});
   $("input.subset").attr("placeholder", "Choose the number of images to play with. Pick a number between 1 and " + revealImages.length + " and press enter.");
   $("h3").css({"background-color": "black", "visibility": "visible"});
   $("ul").hide();
